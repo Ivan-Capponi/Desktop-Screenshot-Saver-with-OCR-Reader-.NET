@@ -37,21 +37,12 @@ This project is a simple tool for capturing the desktop screen, cropping a speci
 
 ### Installation
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/image-processing-ocr-tool.git
-    ```
-
-2. Navigate to the project directory:
-   ```bash
-  cd image-processing-ocr-tool
-   ```
-
-3. Open the project in Visual Studio
-4. Install the required NuGet packages by right-clicking on the project in Solution Explorer and selecting Manage NuGet Packages.
+1. Clone the repository.
+2. Open the project in Visual Studio.
+3. Install the required NuGet packages by right-clicking on the project in Solution Explorer and selecting Manage NuGet Packages.
 
 ### Usage
+
 1. Build and run the project.
 2. The tool will:
    - Capture an image of the desktop.
@@ -60,28 +51,3 @@ This project is a simple tool for capturing the desktop screen, cropping a speci
    - Perform OCR on the cropped region.
    - Save the cropped image as cropped_image.png.
    - The OCR result will be displayed in the console.
-
- ```csharp
-  class Program
-{
-    static void Main()
-    {
-        IImageProcessor imageProcessor = new ImageProcessor();
-        Bitmap screenshot = imageProcessor.CaptureDesktop();
-        byte[] imageBytes = imageProcessor.ImageToByteArray(screenshot);
-        Point[] quadrilateral = new Point[]
-        {
-            new Point(100, 100),
-            new Point(400, 100),
-            new Point(400, 400),
-            new Point(100, 400)
-        };
-        Bitmap croppedImage = imageProcessor.CropImage(imageBytes, quadrilateral);
-        string ocrResult = imageProcessor.PerformOcr(croppedImage);
-        imageProcessor.SaveImage(croppedImage, "cropped_image.png");
-        Console.WriteLine("OCR Result:");
-        Console.WriteLine(ocrResult);
-        Console.ReadLine();
-    }
-}
- ```
