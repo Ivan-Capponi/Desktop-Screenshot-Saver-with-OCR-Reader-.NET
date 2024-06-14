@@ -1,0 +1,1 @@
+# Screenshot Saver with OCR Reader
