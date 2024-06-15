@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 
-
 namespace Screenshot_Saver_with_OCR_Reader
 {
     /// <summary>
@@ -30,6 +29,14 @@ namespace Screenshot_Saver_with_OCR_Reader
         Bitmap CropImage(byte[] imageBytes, OpenCvSharp.Point[] quadrilateral);
 
         /// <summary>
+        /// Crops a specified region from an image file defined by a quadrilateral.
+        /// </summary>
+        /// <param name="filePath">The file path of the image to crop.</param>
+        /// <param name="quadrilateral">Array of points defining the quadrilateral.</param>
+        /// <returns>A Bitmap object containing the cropped region.</returns>
+        Bitmap CropImageFromFile(string filePath, OpenCvSharp.Point[] quadrilateral);
+
+        /// <summary>
         /// Performs OCR on a specified image.
         /// </summary>
         /// <param name="bitmap">The image to perform OCR on.</param>
@@ -43,5 +50,4 @@ namespace Screenshot_Saver_with_OCR_Reader
         /// <param name="filePath">The file path where to save the image.</param>
         void SaveImage(Bitmap bitmap, string filePath);
     }
-
 }

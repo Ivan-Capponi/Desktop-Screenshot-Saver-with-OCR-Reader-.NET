@@ -94,6 +94,42 @@ namespace Screenshot_Saver_with_OCR_Reader
         }
 
         /// <summary>
+        /// Crops a specified region from a Bitmap object defined by a quadrilateral.
+        /// </summary>
+        /// <param name="bitmap">The bitmap to crop.</param>
+        /// <param name="quadrilateral">Array of points defining the quadrilateral.</param>
+        /// <returns>A Bitmap object containing the cropped region.</returns>
+        public Bitmap CropImage(Bitmap bitmap, Point[] quadrilateral)
+        {
+            Mat mat = BitmapConverter.ToMat(bitmap);
+            Point2f[] srcPoints = Array.ConvertAll(quadrilateral, p => new Point2f(p.X, p.Y));
+            Point2f[] dstPoints = new Point2f[]
+            {
+                new Point2f(0, 0),
+                new Point2f(mat.Width, 0),
+                new Point2f(mat.Width, mat.Height),
+                new Point2f(0, mat.Height)
+            };
+            Mat perspectiveMatrix = Cv2.GetPerspectiveTransform(srcPoints, dstPoints);
+            Mat warpedMat = new Mat();
+            Cv2.WarpPerspective(mat, warpedMat, perspectiveMatrix, new OpenCvSharp.Size(mat.Width, mat.Height));
+            Bitmap croppedBitmap = BitmapConverter.ToBitmap(warpedMat);
+            return croppedBitmap;
+        }
+
+        /// <summary>
+        /// Crops a specified region from an image file defined by a quadrilateral.
+        /// </summary>
+        /// <param name="filePath">The file path of the image to crop.</param>
+        /// <param name="quadrilateral">Array of points defining the quadrilateral.</param>
+        /// <returns>A Bitmap object containing the cropped region.</returns>
+        public Bitmap CropImageFromFile(string filePath, Point[] quadrilateral)
+        {
+            Bitmap bitmap = new Bitmap(filePath);
+            return CropImage(bitmap, quadrilateral);
+        }
+
+        /// <summary>
         /// Performs OCR on a specified image.
         /// </summary>
         /// <param name="bitmap">The image to perform OCR on.</param>
